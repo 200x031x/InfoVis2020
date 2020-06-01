@@ -1,13 +1,13 @@
-html
+<html>
 
-head
-    titleW05 Task 01title
-head
+<head>
+    <title>W05: Task 01</title>
+</head>
 
-body
-    script src=httpsthreejs.orgbuildthree.min.jsscript
+<body>
+    <script src="https://threejs.org/build/three.min.js"></script>
 
-    script type=x-shaderx-vertex id=gouraud_l.vert
+    <script type="x-shader/x-vertex" id="gouraud_l.vert">
         varying vec3 point_color;
         varying vec4 point_position;
         varying vec3 normal_vector;
@@ -20,23 +20,23 @@ body
 
             float dd = max( dot( N, L ), 0.0 );
             float Ia = ka;
-            float Id = kd  dd;
-            return C  ( Ia + Id );
+            float Id = kd * dd;
+            return C * ( Ia + Id );
         }
 
         void main()
         {
-        point_position = modelViewMatrix  vec4( position, 1.0 );
-        normal_vector = normalMatrix  normal;
+        point_position = modelViewMatrix * vec4( position, 1.0 );
+        normal_vector = normalMatrix * normal;
         vec3 C = color;
         vec3 L = normalize( light_position - point_position.xyz );
         vec3 N = normalize( normal_vector );
         point_color = LambertianReflection( C, L, N );
-        gl_Position = projectionMatrix  point_position;
+        gl_Position = projectionMatrix * point_position;
         }
-    script
+    </script>
     
-    script type=x-shaderx-vertex id=gouraud_p.vert
+    <script type="x-shader/x-vertex" id="gouraud_p.vert">
         varying vec3 point_color;
         varying vec4 point_position;
         varying vec3 normal_vector;
@@ -52,38 +52,38 @@ body
 		vec3 R = reflect( -L, N );
 		float dd = max( dot( N, L ), 0.0 );
 		float ds = pow( max( dot( R, V ), 0.0 ), n );
-		if ( dd = 0.0 ) { ds = 0.0; }
+		if ( dd <= 0.0 ) { ds = 0.0; }
 		float Ia = ka;
-		float Id = kd  dd;
-		float Is = ks  ds;
-		return C  ( Ia + Id + Is );
+		float Id = kd * dd;
+		float Is = ks * ds;
+		return C * ( Ia + Id + Is );
 		}
 
         void main()
         {
-        point_position = modelViewMatrix  vec4( position, 1.0 );
-        normal_vector = normalMatrix  normal;
+        point_position = modelViewMatrix * vec4( position, 1.0 );
+        normal_vector = normalMatrix * normal;
         vec3 C = color;
         vec3 L = normalize( light_position - point_position.xyz );
         vec3 N = normalize( normal_vector );
         vec3 V = normalize(camera_position - point_position.xyz);
         point_color = PhongReflection( C, L, N, V );
-        gl_Position = projectionMatrix  point_position;
+        gl_Position = projectionMatrix * point_position;
         }
-	script
+	</script>
 
-    script type=x-shaderx-fragment id=gouraud.frag
+    <script type="x-shader/x-fragment" id="gouraud.frag">
         varying vec3 point_color;
     
         void main()
 	    {
 	       gl_FragColor = vec4( point_color, 1.0 );
 	    }
-	script
-    script src=task1.jsscript
-    script
+	</script>
+    <script src="task1.js"></script>
+    <script>
         main();
-    script
-body
+    </script>
+</body>
 
-html
+</html>
