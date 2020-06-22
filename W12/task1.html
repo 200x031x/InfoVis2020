@@ -1,4 +1,4 @@
-!-- Code from d3-graph-gallery.com -->
+<!-- Code from d3-graph-gallery.com -->
 <!DOCTYPE html>
 <meta charset="utf-8">
 
@@ -9,7 +9,7 @@
 <div id="my_dataviz"></div>
 
 X data : country name<br>
-Y data : the population of the country(million)
+Y data : the number of world heritages
 
 <script>
 
@@ -45,7 +45,7 @@ svg.append("g")
 
 // Add Y axis
 var y = d3.scaleLinear()
-  .domain([0, 200])
+  .domain([0, 60])
   .range([ height, 0]);
 svg.append("g")
   .call(d3.axisLeft(y));
@@ -66,8 +66,8 @@ svg.selectAll("mybar")
 svg.selectAll("rect")
   .transition()
   .duration(800)
-  .attr("y", function(d) { return y(d.Population); })
-  .attr("height", function(d) { return height - y(d.Population); })
+  .attr("y", function(d) { return y(d.Value); })
+  .attr("height", function(d) { return height - y(d.Value); })
   .delay(function(d,i){console.log(i) ; return(i*100)})
 
 })
